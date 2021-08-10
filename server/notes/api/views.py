@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import NoteSerializer,CountrySerializer
-from .models import Note,Country
+from .serializers import AnimalSerializer, NoteSerializer,CountrySerializer
+from .models import Note,Country,AnimalList
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -68,6 +68,12 @@ def getRoutes(request):
             'method':'DELETE',
             'body':None,
             'descriptions':'Delete an excising country name',
+        },{
+            'Endpoint':'animal-list/',
+            'method':'GET',
+            'body':None,
+            'descriptions':'Here have list of animals Name'
+
         }
 
 
@@ -177,4 +183,32 @@ def deleteCountry(request, pk):
 
 # Country Name Api end    
 
+
+# List of animal Start
+
+@api_view(['GET'])
+def getAnimalList(request):
+    animal_list = AnimalList.objects.all()
+    serializer = AnimalSerializer(animal_list, many=True)
+
+    return Response(serializer.data)
+
+
+# get a single animal name from list
+@api_view(['GET'])
+def getAAnimal(request, pk):
+    a_animal = AnimalList.objects.get(id=pk)
+    serializer = AnimalSerializer(a_animal, many=False)
+    return Response(serializer.data)
+
+#add animal to list
+
+@api_view(['POST'])
+def addAnimalInList(request):
+    data = request.data
+    animalList = AnimalList.objects.create(
+        body=data['body']
+    )
+    serializer = AnimalSerializer(animalList, many=False)
+    return Response(serializer.data)
 

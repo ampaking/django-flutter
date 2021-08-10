@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.getRoutes),
-
+    
     path('notes/', views.getNotes),
     path('notes/create/', views.createNote),
     path('notes/<str:pk>/update/', views.updateNote),
@@ -15,5 +15,11 @@ urlpatterns = [
     path('country-name/<str:pk>/update/', views.updateCountry),
     path('country-name/<str:pk>/delete/', views.deleteCountry),
     path('country-name/<str:pk>/', views.getSingleCountry),
+
+    path('animal-list/', views.getAnimalList),
+    path('animal-list/create/', views.addAnimalInList),
+    path('animal-list/<str:pk>/', views.getAAnimal),
+
+    
 
 ]
