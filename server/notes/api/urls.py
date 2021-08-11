@@ -18,6 +18,8 @@ urlpatterns = [
 
     path('animal-list/', views.getAnimalList),
     path('animal-list/create/', views.addAnimalInList),
+    path('animal-list/<str:pk>/update', views.updateAnAnimal),
+    path('animal-list/<str:pk>/delete', views.deleteAnAnimal),
     path('animal-list/<str:pk>/', views.getAAnimal),
 
     

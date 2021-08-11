@@ -51,12 +51,12 @@ def getRoutes(request):
             'Endpoint':'/country-name/id/',
             'methord':'GET',
             'body':None,
-            'descriptions':'Return a single country name ID',
+            'description':'Return a single country name ID',
         },{
             'Endpoint':'/country-name/create',
             'method':'POST',
             'body':{"body":''},
-            'descriptions':'Add new country name',
+            'description':'Add new country name',
 
         },{
             'Endpoint':'country-name/id/update',
@@ -67,13 +67,41 @@ def getRoutes(request):
             'Endpoint':'country-name/id/delete',
             'method':'DELETE',
             'body':None,
-            'descriptions':'Delete an excising country name',
+            'description':'Delete an excising country name',
         },{
             'Endpoint':'animal-list/',
             'method':'GET',
             'body':None,
-            'descriptions':'Here have list of animals Name'
+            'description':'Here have list of animals Name'
 
+        },
+        {
+            'Endpoint':'animal-list/id',
+            'method':'GET',
+            'body':None,
+            'description':'Return a single animal name',
+        }, 
+        {
+            'Endpoint':'animal-name/create',
+            'method':'POST',
+            'body':{
+                "body":""
+            },
+            'description':'add new animal name'
+        }, 
+        {
+            'Endpoint':'animal-name/id/update',
+            'method':'PUT',
+            'body':{
+                "body":""
+            },
+            'description':'Update current animal name',
+        }, 
+        {
+            'Endpoint':'animal-name/id/delete',
+            'method':'DELETE',
+            'body':None,
+            'description':'Delete a single animal name',
         }
 
 
@@ -211,4 +239,24 @@ def addAnimalInList(request):
     )
     serializer = AnimalSerializer(animalList, many=False)
     return Response(serializer.data)
+
+# update animal list
+@api_view(['PUT'])
+def updateAnAnimal(request, pk):
+    animal = AnimalList.objects.get(id=pk)
+    serializer = AnimalSerializer(animal, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+#delete an animal from list 
+@api_view(['DELETE'])
+
+def deleteAnAnimal(request, pk):
+    animal = AnimalList.objects.get(id=pk)
+    animal.delete()
+
+    return Response("Delete an animal from list")
+
 
